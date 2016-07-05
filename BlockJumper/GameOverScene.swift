@@ -19,7 +19,7 @@ class GameOverScene: SKScene {
     
     // create a label to see game over on the screen
     let label = SKLabelNode(fontNamed: "Arial")
-    label.text = "Game Over"
+    label.text = "Game Over,Tap to Play."
     label.fontSize = 80
     label.fontColor = SKColor.whiteColor()
     label.position = CGPoint(x: size.width/2, y: size.height/2)

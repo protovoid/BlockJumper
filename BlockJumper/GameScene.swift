@@ -14,6 +14,8 @@ enum Physics {
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+  
+  // characters
   let floor = SKSpriteNode(imageNamed: "blue")
   let player = SKSpriteNode(imageNamed: "orange")
   var enemies = [SKSpriteNode]()
@@ -21,6 +23,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   // timers
   var lastTime = 0
   var currentTime = 0
+  var randomValue = 0
+  
+  
+  
   
   override func update(delta: CFTimeInterval) {
     // loop all enemies and make them walk to collide with player
@@ -29,19 +35,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     currentTime = Int(delta)
-    
+    randomValue = randomizer()
+
+
     if (lastTime == 0) {
       lastTime = currentTime
     }
     
-    if (currentTime > (lastTime + 1)) {
+    if (currentTime > (lastTime + randomValue)) {
       lastTime = currentTime
       spawnEnemy()
     }
     
-    //spawnEnemy()
+    /*
+    if (lastTime == 0) {
+      lastTime = currentTime
+    }
+    
+    if (currentTime > (lastTime + randomValue)) {
+      lastTime = currentTime
+      spawnEnemy()
+    }
+    
+
+    /*
+    if (currentTime > (lastTime + 1)) {
+      lastTime = currentTime
+      spawnEnemy()
+    }
+ */
+ */
+    
+    
     
   }
+  
+  func randomizer(range: Range<Int> = 2...5) -> Int {
+    let min = range.startIndex
+    let max = range.endIndex
+    return Int(arc4random_uniform(UInt32(max - min))) + min
+  }
+  
+  
   
   func spawnEnemy() {
     // create the red square sprite node
@@ -88,6 +123,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   
   // this method is called when user touches screen
   override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    
+    /*
+    if (player.position.y == 0.0) {
+      player.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 70.0))
+    }
+ */
+    
     // we apply an impulse to the axis Y of 70 to make jump straight up
     player.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 70.0))
   }
